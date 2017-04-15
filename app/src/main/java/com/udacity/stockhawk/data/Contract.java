@@ -1,10 +1,10 @@
 package com.udacity.stockhawk.data;
 
-
 import android.net.Uri;
 import android.provider.BaseColumns;
-
-import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public final class Contract {
 
@@ -31,14 +31,11 @@ public final class Contract {
         public static final int POSITION_ABSOLUTE_CHANGE = 3;
         public static final int POSITION_PERCENTAGE_CHANGE = 4;
         public static final int POSITION_HISTORY = 5;
-        public static final ImmutableList<String> QUOTE_COLUMNS = ImmutableList.of(
-                _ID,
-                COLUMN_SYMBOL,
-                COLUMN_PRICE,
-                COLUMN_ABSOLUTE_CHANGE,
-                COLUMN_PERCENTAGE_CHANGE,
-                COLUMN_HISTORY
-        );
+        public static final List<String> QUOTE_COLUMNS = Collections.unmodifiableList(new ArrayList<String>() {
+            {
+                Collections.addAll(this, _ID, COLUMN_SYMBOL, COLUMN_PRICE, COLUMN_ABSOLUTE_CHANGE, COLUMN_PERCENTAGE_CHANGE, COLUMN_HISTORY);
+            }
+        });
         static final String TABLE_NAME = "quotes";
 
         public static Uri makeUriForStock(String symbol) {
@@ -48,8 +45,5 @@ public final class Contract {
         static String getStockFromUri(Uri queryUri) {
             return queryUri.getLastPathSegment();
         }
-
-
     }
-
 }

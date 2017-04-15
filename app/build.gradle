@@ -73,7 +73,6 @@ dependencies {
     compile "com.android.support:recyclerview-v7:${versions.support}"
     compile "com.android.support:design:${versions.support}"
     compile "com.jakewharton:butterknife:${versions.butterknife}"
-    compile "com.google.guava:guava:${versions.guava}"
     compile "com.yahoofinance-api:YahooFinanceAPI:${versions.yahoo_finance_api}"
     compile "com.jakewharton.timber:timber:${versions.timber}"
     compile "net.sf.opencsv:opencsv:${versions.opencsv}"
