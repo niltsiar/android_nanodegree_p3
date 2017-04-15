@@ -3,12 +3,10 @@ package com.udacity.stockhawk.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import com.udacity.stockhawk.data.Contract.Quote;
 
 
 class DbHelper extends SQLiteOpenHelper {
-
 
     private static final String NAME = "StockHawk.db";
     private static final int VERSION = 1;
@@ -30,7 +28,6 @@ class DbHelper extends SQLiteOpenHelper {
                 + "UNIQUE (" + Quote.COLUMN_SYMBOL + ") ON CONFLICT REPLACE);";
 
         db.execSQL(builder);
-
     }
 
     @Override

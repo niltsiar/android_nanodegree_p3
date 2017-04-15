@@ -27,7 +27,6 @@ public class StockProvider extends ContentProvider {
         return matcher;
     }
 
-
     @Override
     public boolean onCreate() {
         dbHelper = new DbHelper(getContext());
@@ -111,6 +110,36 @@ public class StockProvider extends ContentProvider {
     }
 
     @Override
+    public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
+
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        switch (uriMatcher.match(uri)) {
+            case QUOTE:
+                db.beginTransaction();
+                int returnCount = 0;
+                try {
+                    for (ContentValues value : values) {
+                        db.insert(Contract.Quote.TABLE_NAME, null, value);
+                    }
+                    db.setTransactionSuccessful();
+                } finally {
+                    db.endTransaction();
+                }
+
+                Context context = getContext();
+                if (context != null) {
+                    context.getContentResolver()
+                           .notifyChange(uri, null);
+                }
+
+                return returnCount;
+            default:
+                return super.bulkInsert(uri, values);
+        }
+    }
+
+    @Override
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
         int rowsDeleted;
@@ -153,40 +182,5 @@ public class StockProvider extends ContentProvider {
     @Override
     public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         return 0;
-    }
-
-    @Override
-    public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
-
-        final SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        switch (uriMatcher.match(uri)) {
-            case QUOTE:
-                db.beginTransaction();
-                int returnCount = 0;
-                try {
-                    for (ContentValues value : values) {
-                        db.insert(
-                                Contract.Quote.TABLE_NAME,
-                                null,
-                                value
-                        );
-                    }
-                    db.setTransactionSuccessful();
-                } finally {
-                    db.endTransaction();
-                }
-
-                Context context = getContext();
-                if (context != null) {
-                    context.getContentResolver().notifyChange(uri, null);
-                }
-
-                return returnCount;
-            default:
-                return super.bulkInsert(uri, values);
-        }
-
-
     }
 }
