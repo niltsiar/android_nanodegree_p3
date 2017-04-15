@@ -1,14 +1,31 @@
 apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
+    ext.versions = [
+            compileSdk       : '25',
+            buildTools       : '26.0.0rc1',
+            minSdk           : '21',
+            targetSdk        : '25',
+            gradle_android   : '2.4.0-alpha6',
+            apt              : '1.8',
+            gradle_versions  : '0.14.0',
+            check            : '1.2.4',
+            support          : '26.0.0-alpha1',
+            butterknife      : '8.5.1',
+            guava            : '21.0',
+            yahoo_finance_api: '3.6.0',
+            timber           : '4.5.1',
+            opencsv          : '2.4',
+            mp_android_chart : 'v3.0.2',
+    ]
     repositories {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.4.0-alpha6'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
-        classpath 'com.noveogroup.android:check:1.2.3'
+        classpath "com.android.tools.build:gradle:${versions.gradle_android}"
+        classpath "com.neenbedankt.gradle.plugins:android-apt:${versions.apt}"
+        classpath "com.github.ben-manes:gradle-versions-plugin:${versions.gradle_versions}"
+        classpath "com.noveogroup.android:check:${versions.check}"
     }
 }
 
