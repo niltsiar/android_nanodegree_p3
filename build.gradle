@@ -7,7 +7,6 @@ buildscript {
             minSdk           : '21',
             targetSdk        : '25',
             gradle_android   : '2.4.0-alpha6',
-            apt              : '1.8',
             gradle_versions  : '0.14.0',
             check            : '1.2.4',
             support          : '26.0.0-alpha1',
@@ -23,7 +22,6 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:${versions.gradle_android}"
-        classpath "com.neenbedankt.gradle.plugins:android-apt:${versions.apt}"
         classpath "com.github.ben-manes:gradle-versions-plugin:${versions.gradle_versions}"
         classpath "com.noveogroup.android:check:${versions.check}"
     }

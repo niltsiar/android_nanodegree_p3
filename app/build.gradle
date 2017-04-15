@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.noveogroup.android.check'
 
 repositories {
@@ -56,10 +55,11 @@ dependencies {
     compile "com.android.support:recyclerview-v7:${versions.support}"
     compile "com.android.support:design:${versions.support}"
     compile "com.jakewharton:butterknife:${versions.butterknife}"
-    apt "com.jakewharton:butterknife-compiler:${versions.butterknife}"
     compile "com.google.guava:guava:${versions.guava}"
     compile "com.yahoofinance-api:YahooFinanceAPI:${versions.yahoo_finance_api}"
     compile "com.jakewharton.timber:timber:${versions.timber}"
     compile "net.sf.opencsv:opencsv:${versions.opencsv}"
     compile "com.github.PhilJay:MPAndroidChart:${versions.mp_android_chart}"
+
+    annotationProcessor "com.jakewharton:butterknife-compiler:${versions.butterknife}"
 }
