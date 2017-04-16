@@ -32,7 +32,11 @@
   <string name="toast_no_connectivity">Will refresh when network available.</string>
   <string name="toast_stock_does_not_exist">Symbol %s does not exist.</string>
 
-  <string name="content_descroption_main_fab">Add stock symbol</string>
-  <string name="content_descroption_stock_chart">Data through time for symbol: %s</string>
+  <string name="content_description_main_fab">Add stock symbol</string>
+  <string name="content_description_symbol">Symbol: %s</string>
+  <string name="content_description_price">Price: %f</string>
+  <string name="content_description_change">Changed: %s</string>
+  <string name="content_description_percentage_changed">Percentage changed: %s percent</string>
+  <string name="content_description_stock_chart">Data through time for symbol: %s</string>
 
 </resources>
