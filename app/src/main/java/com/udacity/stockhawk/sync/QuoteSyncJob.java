@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.content.LocalBroadcastManager;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 import java.io.IOException;
@@ -26,6 +27,9 @@ import yahoofinance.histquotes.Interval;
 import yahoofinance.quotes.stock.StockQuote;
 
 public final class QuoteSyncJob {
+
+    public static final String ACTION_INVALID_STOCK = "com.udacity.stockhawk.ACTION_INVALID_STOCK";
+    public static final String INVALID_STOCK = "com.udacity.stockhawk.INVALID_STOCK";
 
     private static final int ONE_OFF_ID = 2;
     private static final String ACTION_DATA_UPDATED = "com.udacity.stockhawk.ACTION_DATA_UPDATED";
@@ -50,18 +54,31 @@ public final class QuoteSyncJob {
             Set<String> stockPref = PrefUtils.getStocks(context);
             Set<String> stockCopy = new HashSet<>();
             stockCopy.addAll(stockPref);
+
+            if (stockCopy.isEmpty()) {
+                return;
+            }
+
             String[] stockArray = stockPref.toArray(new String[stockPref.size()]);
 
             Timber.d(stockCopy.toString());
 
-            if (stockArray.length == 0) {
-                return;
+            Map<String, Stock> quotes = YahooFinance.get(stockArray);
+            Timber.d(quotes.toString());
+
+            for (Map.Entry<String, Stock> entry : quotes.entrySet()) {
+                if (!entry.getValue()
+                          .isValid()) {
+                    stockCopy.remove(entry.getKey());
+                    PrefUtils.removeStock(context, entry.getKey());
+                    Intent invalid = new Intent(ACTION_INVALID_STOCK);
+                    invalid.putExtra(INVALID_STOCK, entry.getKey());
+                    LocalBroadcastManager.getInstance(context)
+                                         .sendBroadcast(invalid);
+                }
             }
 
-            Map<String, Stock> quotes = YahooFinance.get(stockArray);
             Iterator<String> iterator = stockCopy.iterator();
-
-            Timber.d(quotes.toString());
 
             ArrayList<ContentValues> quoteCVs = new ArrayList<>();
 
