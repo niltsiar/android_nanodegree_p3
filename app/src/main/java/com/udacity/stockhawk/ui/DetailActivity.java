@@ -66,6 +66,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         lineChart.setData(lineData);
         lineChart.getDescription()
                  .setText("");
+        lineChart.setContentDescription(getString(R.string.content_descroption_stock_chart, symbol));
         lineChart.invalidate();
     }
 
