@@ -49,4 +49,7 @@
   <string name="content_description_percentage_changed">Percentage changed: <xliff:g id="percentage">%s</xliff:g> percent</string>
   <string name="content_description_stock_chart">Data through time for symbol: <xliff:g id="symbol">%s</xliff:g></string>
 
+  <string name="appwidget_text">StockHawk Widget</string>
+  <string name="add_widget">Add widget</string>
+
 </resources>
