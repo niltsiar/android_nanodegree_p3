@@ -56,18 +56,20 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         data.moveToFirst();
         String history = data.getString(0);
         String[] quotes = history.split("\n");
-        List<Entry> entries = new ArrayList<>(quotes.length);
-        for (int i = 0; i < quotes.length; i++) {
-            String[] parts = quotes[i].split(",");
-            entries.add(new Entry(i, Float.parseFloat(parts[1])));
+        if (quotes[0] != "") {
+            List<Entry> entries = new ArrayList<>(quotes.length);
+            for (int i = 0; i < quotes.length; i++) {
+                String[] parts = quotes[i].split(",");
+                entries.add(new Entry(i, Float.parseFloat(parts[1])));
+            }
+            LineDataSet dataSet = new LineDataSet(entries, symbol);
+            LineData lineData = new LineData(dataSet);
+            lineChart.setData(lineData);
+            lineChart.getDescription()
+                     .setText("");
+            lineChart.setContentDescription(getString(R.string.content_description_stock_chart, symbol));
+            lineChart.invalidate();
         }
-        LineDataSet dataSet = new LineDataSet(entries, symbol);
-        LineData lineData = new LineData(dataSet);
-        lineChart.setData(lineData);
-        lineChart.getDescription()
-                 .setText("");
-        lineChart.setContentDescription(getString(R.string.content_description_stock_chart, symbol));
-        lineChart.invalidate();
     }
 
     @Override
