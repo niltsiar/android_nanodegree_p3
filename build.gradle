@@ -14,7 +14,7 @@ buildscript {
 
             support          : '26.0.0-alpha1',
             butterknife      : '8.5.1',
-            yahoo_finance_api: '3.6.0',
+            yahoo_finance_api: '3.6.1',
             timber           : '4.5.1',
             opencsv          : '2.4',
             mp_android_chart : 'v3.0.2',
