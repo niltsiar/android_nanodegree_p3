@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-
 public class StockProvider extends ContentProvider {
 
     private static final int QUOTE = 100;
@@ -41,27 +40,12 @@ public class StockProvider extends ContentProvider {
 
         switch (uriMatcher.match(uri)) {
             case QUOTE:
-                returnCursor = db.query(
-                        Contract.Quote.TABLE_NAME,
-                        projection,
-                        selection,
-                        selectionArgs,
-                        null,
-                        null,
-                        sortOrder
-                );
+                returnCursor = db.query(Contract.Quote.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
 
             case QUOTE_FOR_SYMBOL:
-                returnCursor = db.query(
-                        Contract.Quote.TABLE_NAME,
-                        projection,
-                        Contract.Quote.COLUMN_SYMBOL + " = ?",
-                        new String[]{Contract.Quote.getStockFromUri(uri)},
-                        null,
-                        null,
-                        sortOrder
-                );
+                returnCursor = db.query(Contract.Quote.TABLE_NAME, projection, Contract.Quote.COLUMN_SYMBOL + " = ?",
+                                        new String[]{Contract.Quote.getStockFromUri(uri)}, null, null, sortOrder);
 
                 break;
             default:
@@ -69,7 +53,7 @@ public class StockProvider extends ContentProvider {
         }
 
         Context context = getContext();
-        if (context != null){
+        if (context != null) {
             returnCursor.setNotificationUri(context.getContentResolver(), uri);
         }
 
@@ -90,11 +74,7 @@ public class StockProvider extends ContentProvider {
 
         switch (uriMatcher.match(uri)) {
             case QUOTE:
-                db.insert(
-                        Contract.Quote.TABLE_NAME,
-                        null,
-                        values
-                );
+                db.insert(Contract.Quote.TABLE_NAME, null, values);
                 returnUri = Contract.Quote.URI;
                 break;
             default:
@@ -102,8 +82,9 @@ public class StockProvider extends ContentProvider {
         }
 
         Context context = getContext();
-        if (context != null){
-            context.getContentResolver().notifyChange(uri, null);
+        if (context != null) {
+            context.getContentResolver()
+                   .notifyChange(uri, null);
         }
 
         return returnUri;
@@ -149,21 +130,13 @@ public class StockProvider extends ContentProvider {
         }
         switch (uriMatcher.match(uri)) {
             case QUOTE:
-                rowsDeleted = db.delete(
-                        Contract.Quote.TABLE_NAME,
-                        selection,
-                        selectionArgs
-                );
+                rowsDeleted = db.delete(Contract.Quote.TABLE_NAME, selection, selectionArgs);
 
                 break;
 
             case QUOTE_FOR_SYMBOL:
                 String symbol = Contract.Quote.getStockFromUri(uri);
-                rowsDeleted = db.delete(
-                        Contract.Quote.TABLE_NAME,
-                        '"' + symbol + '"' + " =" + Contract.Quote.COLUMN_SYMBOL,
-                        selectionArgs
-                );
+                rowsDeleted = db.delete(Contract.Quote.TABLE_NAME, '"' + symbol + '"' + " =" + Contract.Quote.COLUMN_SYMBOL, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown URI:" + uri);
@@ -171,8 +144,9 @@ public class StockProvider extends ContentProvider {
 
         if (rowsDeleted != 0) {
             Context context = getContext();
-            if (context != null){
-                context.getContentResolver().notifyChange(uri, null);
+            if (context != null) {
+                context.getContentResolver()
+                       .notifyChange(uri, null);
             }
         }
 

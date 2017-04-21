@@ -50,7 +50,8 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
 
     @Override
     public StockViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View item = LayoutInflater.from(context).inflate(R.layout.list_item_quote, parent, false);
+        View item = LayoutInflater.from(context)
+                                  .inflate(R.layout.list_item_quote, parent, false);
 
         return new StockViewHolder(item);
     }
@@ -80,7 +81,7 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
         String percentage = percentageFormat.format(percentageChange / 100);
 
         if (PrefUtils.getDisplayMode(context)
-                .equals(context.getString(R.string.pref_display_mode_absolute_key))) {
+                     .equals(context.getString(R.string.pref_display_mode_absolute_key))) {
             holder.change.setText(change);
             holder.change.setContentDescription(context.getString(R.string.content_description_change, change));
         } else {

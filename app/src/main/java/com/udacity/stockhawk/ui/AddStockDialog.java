@@ -15,7 +15,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.udacity.stockhawk.R;
 
-
 public class AddStockDialog extends DialogFragment {
 
     @SuppressWarnings("WeakerAccess")
@@ -54,7 +53,8 @@ public class AddStockDialog extends DialogFragment {
     private void addStock() {
         Activity parent = getActivity();
         if (parent instanceof MainActivity) {
-            ((MainActivity) parent).addStock(stock.getText().toString());
+            ((MainActivity) parent).addStock(stock.getText()
+                                                  .toString());
         }
         dismissAllowingStateLoss();
     }

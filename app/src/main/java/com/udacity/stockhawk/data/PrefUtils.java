@@ -16,7 +16,8 @@ public final class PrefUtils {
     public static Set<String> getStocks(Context context) {
         String stocksKey = context.getString(R.string.pref_stocks_key);
         String initializedKey = context.getString(R.string.pref_stocks_initialized_key);
-        String[] defaultStocksList = context.getResources().getStringArray(R.array.default_stocks);
+        String[] defaultStocksList = context.getResources()
+                                            .getStringArray(R.array.default_stocks);
 
         HashSet<String> defaultStocks = new HashSet<>(Arrays.asList(defaultStocksList));
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
