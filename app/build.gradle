@@ -4,6 +4,7 @@ import org.eclipse.jgit.errors.RepositoryNotFoundException
 apply plugin: 'com.android.application'
 apply plugin: 'com.noveogroup.android.check'
 apply plugin: 'com.getkeepsafe.dexcount'
+apply plugin: 'me.tatarka.retrolambda'
 
 repositories {
     maven { url "https://jitpack.io" }
@@ -68,7 +69,6 @@ check {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
     compile "com.android.support:appcompat-v7:${versions.support}"
     compile "com.android.support:recyclerview-v7:${versions.support}"
     compile "com.android.support:design:${versions.support}"
@@ -78,7 +78,11 @@ dependencies {
     compile "net.sf.opencsv:opencsv:${versions.opencsv}"
     compile "com.github.PhilJay:MPAndroidChart:${versions.mp_android_chart}"
 
+    testCompile "junit:junit:${versions.junit}"
+
     annotationProcessor "com.jakewharton:butterknife-compiler:${versions.butterknife}"
+
+    retrolambdaConfig "net.orfjackal.retrolambda:retrolambda:${versions.retrolambda}"
 }
 
 android.applicationVariants.all { variant ->
@@ -87,7 +91,7 @@ android.applicationVariants.all { variant ->
     }
 }
 
-def getRevision() {
+def static getRevision() {
     def revision
     try {
         revision = getGitRevision()
@@ -97,7 +101,7 @@ def getRevision() {
     return revision
 }
 
-def getGitRevision() {
+def static getGitRevision() {
     def git = Grgit.open(dir: '.')
     return git.head().abbreviatedId
 }

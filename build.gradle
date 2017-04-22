@@ -2,22 +2,26 @@ apply plugin: 'com.github.ben-manes.versions'
 
 buildscript {
     ext.versions = [
-            compileSdk       : '25',
-            buildTools       : '26.0.0rc1',
-            minSdk           : '21',
-            targetSdk        : '25',
-            gradle_android   : '2.4.0-alpha6',
-            gradle_versions  : '0.14.0',
-            check            : '1.2.4',
-            gradle_git       : '1.7.1',
-            dexcount         : '0.6.4',
+            compileSdk               : '25',
+            buildTools               : '25.0.2',
+            minSdk                   : '21',
+            targetSdk                : '25',
+            gradle_android           : '2.3.1',
+            gradle_versions          : '0.14.0',
+            check                    : '1.2.4',
+            gradle_git               : '1.7.1',
+            dexcount                 : '0.6.4',
+            retrolambda_gradle_plugin: '3.6.0',
 
-            support          : '26.0.0-alpha1',
-            butterknife      : '8.5.1',
-            yahoo_finance_api: '3.6.1',
-            timber           : '4.5.1',
-            opencsv          : '2.4',
-            mp_android_chart : 'v3.0.2',
+            support                  : '25.3.1',
+            butterknife              : '8.5.1',
+            yahoo_finance_api        : '3.6.1',
+            timber                   : '4.5.1',
+            opencsv                  : '2.4',
+            mp_android_chart         : 'v3.0.2',
+            retrolambda              : '2.5.1',
+
+            junit                    : '4.12',
     ]
     repositories {
         jcenter()
@@ -28,6 +32,7 @@ buildscript {
         classpath "com.noveogroup.android:check:${versions.check}"
         classpath "org.ajoberstar:gradle-git:${versions.gradle_git}"
         classpath "com.getkeepsafe.dexcount:dexcount-gradle-plugin:${versions.dexcount}"
+        classpath "me.tatarka:gradle-retrolambda:${versions.retrolambda_gradle_plugin}"
     }
 }
 
@@ -39,4 +44,19 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+//Configuration for gradle-versions-plugin to avoid non-release versions
+//to run: gradlew dependencyUpdates
+dependencyUpdates.resolutionStrategy = {
+    componentSelection { rules ->
+        rules.all { ComponentSelection selection ->
+            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm', 'alpha-preview'].any { qualifier ->
+                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+            }
+            if (rejected) {
+                selection.reject('Release candidate')
+            }
+        }
+    }
 }
